@@ -10,7 +10,6 @@ var Enemy = function(x, y, speed) {
     this.y = y;
     this.speed = speed;
 }
-
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -20,12 +19,10 @@ Enemy.prototype.update = function(dt) {
         this.x = -75;
     }
 }
-
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
-
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -37,7 +34,28 @@ var Player = function(x,y){
 Player.prototype.update = function(dt){ 
     if(this.y < 50){
         player.reset();
+    }
+    // width: 101, height: 171
+    playerPosition = {
+        'left':   this.x,
+        'top':    this.y,
+        'right':  this.x+70,
+        'bottom': this.y+70,
     }    
+    for(e=0; e<allEnemies.length; e++){
+        bugPosition = {
+            'left':  allEnemies[e].x,
+            'top':   allEnemies[e].y,
+            'right': allEnemies[e].x+70,
+            'bottom':allEnemies[e].y+70,
+        }
+    }
+    if(playerPosition.left<bugPosition.right &&
+        playerPosition.top<bugPosition.bottom &&
+        playerPosition.right>bugPosition.left &&
+        playerPosition.bottom>bugPosition.top){
+        player.reset();
+    }       
 }
 Player.prototype.reset = function(){
     this.x = 200;
@@ -58,14 +76,18 @@ Player.prototype.handleInput = function(key) {
     }
     if(key === 'down' && this.y < 400){
         this.y = this.y + 82.5;
-    }
+    }    
 }
-// Now instantiate your objects.
+Player.prototype.collision = function() {
+    
+        
+}
 
+// Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-var allEnemies = [new Enemy(200, 56, 100), 
-                  new Enemy(0, 140, 200), 
-                  new Enemy(400, 225, 300)];
+var allEnemies = [new Enemy(200, 140, 100), 
+                  new Enemy(0, 56, 100), 
+                  new Enemy(400, 225, 100)];
 // Place the player object in a variable called player
 var player = new Player(200, 400);
 
