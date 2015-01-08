@@ -40,7 +40,7 @@ Player.prototype.update = function(dt){
     playerPosition = {
         'left':   this.x,
         'top':    this.y,
-        'right':  this.x+70,
+        'right':  this.x+50,
         'bottom': this.y+70,
     }
     // Iterate through allEnemies and define enemy area   
@@ -51,14 +51,14 @@ Player.prototype.update = function(dt){
             'right': allEnemies[e].x+70,
             'bottom':allEnemies[e].y+70,
         }
-    }
-    // Collision detection
+        // Collision detection
     if(playerPosition.left<bugPosition.right &&
         playerPosition.top<bugPosition.bottom &&
         playerPosition.right>bugPosition.left &&
         playerPosition.bottom>bugPosition.top){
-        player.reset();
-    }       
+        player.reset(); }
+    }
+         
 }
 Player.prototype.reset = function(){
     this.x = 200;
