@@ -1,36 +1,35 @@
 // Enemies our player must avoid
-var Enemy = function(x, y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+var Enemy = function(x, y, speed) {    
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
     this.speed = speed;
 }
-// Update the enemy's position, required method for game
+
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
+    // If the enemies position is within the screen, this sets speed * dt
     if(this.x < ctx.canvas.width){
         this.x += this.speed * dt;
-    }else{
+    }
+    // If the enemy is off the screen, reset position
+    else{
         this.x = -75;
     }
 }
+
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+
+// Player Class
 var Player = function(x,y){
     this.sprite ='images/char-boy.png';
     this.x = x;
     this.y = y;
 }
+
 Player.prototype.update = function(dt){ 
     // If player reaches top row, reset back to start
     if(this.y < 50){
@@ -60,13 +59,19 @@ Player.prototype.update = function(dt){
     }
          
 }
+
+// Reset player back to starting position.
 Player.prototype.reset = function(){
     this.x = 200;
     this.y = 400;
 }
+
+// Draw the player on the screen
 Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
+
+// What to do when arrow keys are used
 Player.prototype.handleInput = function(key) {
     if(key === 'left' && this.x > 25){
         this.x = this.x - 100;
@@ -82,13 +87,12 @@ Player.prototype.handleInput = function(key) {
     }    
 }
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-var allEnemies = [new Enemy(0, 60, 100), new Enemy(0, 145, 200), new Enemy(0, 230, 300)];
-// Place the player object in a variable called player
+// Instantiation
+var allEnemies = [new Enemy(0, 60, 100),
+                  new Enemy(0, 145, 200),
+                  new Enemy(0, 230, 300)];
+
 var player = new Player(200, 400);
-
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
