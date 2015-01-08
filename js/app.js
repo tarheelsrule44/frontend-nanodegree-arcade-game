@@ -32,16 +32,18 @@ var Player = function(x,y){
     this.y = y;
 }
 Player.prototype.update = function(dt){ 
+    // If player reaches top row, reset back to start
     if(this.y < 50){
         player.reset();
     }
-    // width: 101, height: 171
+    // Defines player's area
     playerPosition = {
         'left':   this.x,
         'top':    this.y,
         'right':  this.x+70,
         'bottom': this.y+70,
-    }    
+    }
+    // Iterate through allEnemies and define enemy area   
     for(e=0; e<allEnemies.length; e++){
         bugPosition = {
             'left':  allEnemies[e].x,
@@ -50,6 +52,7 @@ Player.prototype.update = function(dt){
             'bottom':allEnemies[e].y+70,
         }
     }
+    // Collision detection
     if(playerPosition.left<bugPosition.right &&
         playerPosition.top<bugPosition.bottom &&
         playerPosition.right>bugPosition.left &&
@@ -78,16 +81,10 @@ Player.prototype.handleInput = function(key) {
         this.y = this.y + 82.5;
     }    
 }
-Player.prototype.collision = function() {
-    
-        
-}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-var allEnemies = [new Enemy(200, 140, 100), 
-                  new Enemy(0, 56, 100), 
-                  new Enemy(400, 225, 100)];
+var allEnemies = [new Enemy(0, 60, 100), new Enemy(0, 145, 200), new Enemy(0, 230, 300)];
 // Place the player object in a variable called player
 var player = new Player(200, 400);
 
