@@ -1,3 +1,8 @@
+var randomSpeed = function() {
+    var ranSpeed = (Math.floor(Math.random() * 7) +1) * 100;
+    return ranSpeed;
+}
+
 // Enemies our player must avoid
 var Enemy = function(x, y, speed) {    
     this.sprite = 'images/enemy-bug.png';
@@ -14,7 +19,8 @@ Enemy.prototype.update = function(dt) {
     }
     // If the enemy is off the screen, reset position
     else{
-        this.x = -75;
+        this.x = -75;     
+        this.speed = randomSpeed(); 
     }
 }
 
@@ -74,23 +80,25 @@ Player.prototype.render = function(){
 // What to do when arrow keys are used
 Player.prototype.handleInput = function(key) {
     if(key === 'left' && this.x > 25){
-        this.x = this.x - 100;
+        this.x -= 100;
     }
     if(key === 'up' && this.y > 0){
-        this.y = this.y - 82.5;
+        this.y -= 82.5;
     }
     if(key === 'right' && this.x < 400){
-        this.x = this.x + 100;
+        this.x += 100;
     }
     if(key === 'down' && this.y < 400){
-        this.y = this.y + 82.5;
+        this.y +=  82.5;
     }    
 }
 
+var enemy1 = new Enemy(0, 60, 100);
+var enemy2 = new Enemy(0, 145, 300);
+var enemy3 = new Enemy(0, 230, 500);
+
 // Instantiation
-var allEnemies = [new Enemy(0, 60, 100),
-                  new Enemy(0, 145, 200),
-                  new Enemy(0, 230, 300)];
+var allEnemies = [enemy1, enemy2, enemy3];
 
 var player = new Player(200, 400);
 
