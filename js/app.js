@@ -85,9 +85,9 @@ var Player = function(x,y){
 
 Player.prototype.update = function(dt){ 
     // If player reaches top row, reset back to start
-    /*if(this.y < 50){
+    if(this.y < 50){
         player.reset();
-    }  */
+    }  
 
     // Defines player's area
     playerPosition = {
