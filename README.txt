@@ -1,5 +1,11 @@
-To run the game simply press any of the arrow keys in any direction.
+#Frogger Clone
 
-Try to avoid enemy bugs.
+To play the game, follow this link:  http://tarheelsrule44.github.io/frogger-clone/index.html
 
-Once the top row of water has been reached, the player will reset back to starting position.
+Controls:
+
+Use the arrow keys to move the player in any direction.
+
+Gameplay:
+
+Avoid the enemy bugs and try to collect the gems.  Once all gems have been collected, the enemies will disappear and the player has won the game!

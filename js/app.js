@@ -8,14 +8,45 @@ var randomRow = function() {
     return getRandomRow;
 }
 
-var Rock = function(x, y) {
-    this.sprite = 'images/Rock.png';
+var column = [0, 101, 202, 303, 404, 505, 606];
+var randomColumn = function() {
+    getRandomColumn = column[Math.floor(Math.random() * column.length)];
+    return getRandomColumn;
+}
+
+var Gem = function(x, y) {
+    var gemImage = ['images/Gem Blue.png', 'images/Gem Orange.png', 'images/Gem Green.png'];
+    this.sprite = gemImage[Math.floor(Math.random() * gemImage.length)];
     this.x = x;
     this.y = y;
 }
 
-Rock.prototype.render = function() {
+Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+Gem.prototype.update = function() {
+    for(e=0; e<allGems.length; e++){
+        gemPosition = {
+            'left':   allGems[e].x,
+            'top': allGems[e].y,
+            'right':  allGems[e].x+75,
+            'bottom':    allGems[e].y+60,
+        }
+        // Collision detection
+        if(playerPosition.left<gemPosition.right &&
+            playerPosition.top<gemPosition.bottom &&
+            playerPosition.right>gemPosition.left &&
+            playerPosition.bottom>gemPosition.top) {
+        // removes the collected gem    
+        allGems.splice(e, 1); 
+        // if all gems are collected, no more enemies
+        if(allGems.length < 1) {
+            allEnemies = [];
+        }       
+    }        
+        
+    }
 }
 
 // Enemies our player must avoid
@@ -54,9 +85,10 @@ var Player = function(x,y){
 
 Player.prototype.update = function(dt){ 
     // If player reaches top row, reset back to start
-    if(this.y < 50){
+    /*if(this.y < 50){
         player.reset();
-    }
+    }  */
+
     // Defines player's area
     playerPosition = {
         'left':   this.x,
@@ -84,7 +116,7 @@ Player.prototype.update = function(dt){
 
 // Reset player back to starting position.
 Player.prototype.reset = function(){
-    this.x = 300;
+    this.x = 303;
     this.y = 400;
 }
 
@@ -96,31 +128,35 @@ Player.prototype.render = function(){
 // What to do when arrow keys are used
 Player.prototype.handleInput = function(key) {
     if(key === 'left' && this.x > 25){
-        this.x -= 100;
+        this.x -= 101;
     }
     if(key === 'up' && this.y > 0){
-        this.y -= 82.5;
+        this.y -= 83;
     }
     if(key === 'right' && this.x < 600){
-        this.x += 100;
+        this.x += 101;
     }
     if(key === 'down' && this.y < 400){
-        this.y +=  82.5;
+        this.y +=  83;
     }    
 }
 
-var enemy1 = new Enemy(0, randomRow(), randomSpeed());
-var enemy2 = new Enemy(0, randomRow(), randomSpeed());
-var enemy3 = new Enemy(0, randomRow(), randomSpeed());
-var enemy4 = new Enemy(0, randomRow(), randomSpeed());
-var enemy5 = new Enemy(0, randomRow(), randomSpeed());
+var enemy1 = new Enemy(-75, randomRow(), randomSpeed());
+var enemy2 = new Enemy(-75, randomRow(), randomSpeed());
+var enemy3 = new Enemy(-75, randomRow(), randomSpeed());
+var enemy4 = new Enemy(-75, randomRow(), randomSpeed());
+var enemy5 = new Enemy(-75, randomRow(), randomSpeed());
 
 // Instantiation
 var allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5];
 
-var player = new Player(300, 400);
+var player = new Player(303, 400);
 
-var rock = new Rock(200, -25);
+var gem1 = new Gem(randomColumn() +15, randomRow() +25);
+var gem2 = new Gem(randomColumn() +15, randomRow() +25);
+var gem3 = new Gem(randomColumn() +15, randomRow() +25);
+
+var allGems = [gem1, gem2, gem3];
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
