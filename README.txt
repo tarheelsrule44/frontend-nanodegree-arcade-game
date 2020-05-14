@@ -1,6 +1,6 @@
 #Frogger Clone
 
-To play the game, follow this link:  http://tarheelsrule44.github.io/frogger-clone/index.html
+To play the game, follow this link:  http://tytanic.github.io/frogger-clone/index.html
 
 Controls:
 
